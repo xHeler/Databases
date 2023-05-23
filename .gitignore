@@ -1,0 +1,4 @@
+.venv/
+cockroach-data*/
+migrations/
+__pycache__/

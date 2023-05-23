@@ -1,0 +1,34 @@
+services:
+  cockroachdb1:
+    image: cockroachdb/cockroach:v23.1.1
+    command: start-single-node --insecure
+    volumes:
+      - ./cockroach-data1:/cockroach/cockroach-data
+    ports:
+      - 26257:26257
+      - 8079:8080
+    environment:
+      - COCKROACH_INSECURE=true
+    networks:
+      - cockroach-network
+
+  cockroachdb2:
+    image: cockroachdb/cockroach:v23.1.1
+    command: start --insecure --join=cockroachdb1
+    volumes:
+      - ./cockroach-data2:/cockroach/cockroach-data
+    ports:
+      - 26258:26257
+      - 8078:8080
+    environment:
+      - COCKROACH_INSECURE=true
+    networks:
+      - cockroach-network
+
+networks:
+  cockroach-network:
+
+volumes:
+  data:
+  cockroach-data1:
+  cockroach-data2:
